@@ -10,25 +10,26 @@ public abstract class Spawner: MonoBehaviour
     [SerializeField]
     protected GameObject prefab;
 
-    [SerializeField]
-    protected GameObject SpawnedObj;
-
     public virtual void Spawn()
-    {
-        SpawnedObj = Instantiate(prefab, position, Quaternion.identity);
-        SpawnedObj.SetActive(true);
-    }
-
-    public bool isSpawned()
-    {
-        return SpawnedObj != null;
-    }
-
-    protected virtual void FixedUpdate()
     {
         if (!isSpawned())
         {
-            Spawn();
+            Instantiate(prefab, position, Quaternion.identity);
         }
+    }
+
+    public virtual void Spawn(ref GameObject GameObjRef)
+    {
+        if (!isSpawned())
+        {
+            GameObjRef = Instantiate(prefab, position, Quaternion.identity);
+        }
+    }
+
+    public abstract bool isSpawned();
+
+    protected virtual void FixedUpdate()
+    {
+        Spawn();
     }
 }

@@ -5,9 +5,8 @@ using UnityEngine;
 public class Wall : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] bricks;  
-    [SerializeField]
-    private float speed = 6;
+    private GameObject[] bricks;
+    private float speed = 4;
 
     void FixedUpdate()
     {
@@ -18,7 +17,7 @@ public class Wall : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Projectile"))
         {
-            foreach(GameObject brick in bricks)
+            foreach (GameObject brick in bricks)
             {
                 brick.GetComponent<Rigidbody>().isKinematic = false;
             }

@@ -6,28 +6,41 @@ public class ProjectileSpawner : Spawner
 {
     [SerializeField]
     private GameObject[] m_ProjectilePrefabs;
+    [SerializeField]
+    private static GameObject SpawnedProjectile;
+
     private int n;
+
+    public static Rigidbody GetSpawnedProjectile()
+    {
+        if (SpawnedProjectile != null)
+            return SpawnedProjectile.GetComponent<Rigidbody>();
+        return null;
+    }
 
     protected void Start()
     {
         n = 0;
-        Spawn();
+        Spawn(ref SpawnedProjectile);
     }
 
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && SpawnedProjectile != null)
         {
-            if (ChangedProjectile() && SpawnedObj.GetComponent<Rigidbody>().isKinematic != false)
+            if (isProjectileChanged() && !isProjectileLaunched())
             {
-                Destroy(SpawnedObj);
-                Spawn();
+                Destroy(SpawnedProjectile);
+                Spawn(ref SpawnedProjectile);
             }
+        }
+        else
+        {
+            Spawn(ref SpawnedProjectile);
         }
     }
 
-    private bool ChangedProjectile() // ABSTRACTION
+    private bool isProjectileChanged() // ABSTRACTION
     {
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -41,5 +54,15 @@ public class ProjectileSpawner : Spawner
         }
         else return false;
         return true;
+    }
+
+    private bool isProjectileLaunched()
+    {
+        return SpawnedProjectile.GetComponent<Rigidbody>().isKinematic == false;
+    }
+
+    public override bool isSpawned()
+    {
+        return SpawnedProjectile != null;
     }
 }
