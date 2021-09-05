@@ -17,7 +17,7 @@ public class WallSpawner : Spawner
 
     protected override void FixedUpdate()
     {
-        if (!isSpawned())
+        if (!GameplayManager.Instance.GameOver && !isSpawned())
         {
             Spawn();
             StartCoroutine(DelaySpawning());

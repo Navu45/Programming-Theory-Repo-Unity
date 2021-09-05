@@ -26,17 +26,20 @@ public class ProjectileSpawner : Spawner
 
     protected override void FixedUpdate()
     {
-        if (Input.anyKeyDown && SpawnedProjectile != null)
+        if (!GameplayManager.Instance.GameOver)
         {
-            if (isProjectileChanged() && !isProjectileLaunched())
+            if (Input.anyKeyDown && SpawnedProjectile != null)
             {
-                Destroy(SpawnedProjectile);
+                if (isProjectileChanged() && !isProjectileLaunched())
+                {
+                    Destroy(SpawnedProjectile);
+                    Spawn(ref SpawnedProjectile);
+                }
+            }
+            else
+            {
                 Spawn(ref SpawnedProjectile);
             }
-        }
-        else
-        {
-            Spawn(ref SpawnedProjectile);
         }
     }
 
