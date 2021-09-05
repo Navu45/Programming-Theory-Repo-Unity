@@ -4,18 +4,46 @@ using UnityEngine;
 
 public class ProjectileLauncher : MonoBehaviour
 {
+    [SerializeField] 
+    private Rigidbody projectile;
     [SerializeField]
-    private GameObject[] projectiles;
+    private float speed = 10000f;
     [SerializeField]
-    private Rigidbody CurrentProjecile;
-    private float speed = 10f;
+    private bool isDelayOver;
+
+    private float DelayTime;
+
+    void Start()
+    {
+        isDelayOver = true;
+        DelayTime = 1.5f;
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (projectile == null)
         {
-            CurrentProjecile.isKinematic = false;
-            CurrentProjecile.AddForce(Vector3.forward * speed, ForceMode.VelocityChange);
+            projectile = ProjectileSpawner.GetSpawnedProjectile();
         }
+
+        if (projectile != null && isDelayOver && Input.GetKeyDown(KeyCode.Space))
+        {
+            Launch();
+            StartCoroutine(DelayLaunching());
+        }
+    }
+
+    IEnumerator DelayLaunching()
+    {
+        isDelayOver = false;
+        yield return new WaitForSeconds(DelayTime);
+        isDelayOver = true;
+    }
+
+    void Launch()
+    {
+        projectile.isKinematic = false;
+        projectile.useGravity = true;
+        projectile.AddForce(new Vector3(0, 0.5f, 1) * speed, ForceMode.VelocityChange);
     }
 }

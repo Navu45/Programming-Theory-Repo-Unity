@@ -5,8 +5,13 @@ using UnityEngine;
 public class Wall : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] bricks;
-    private float speed = 4;
+    private GameObject[] bricks;  
+    [SerializeField]
+    [SerializeField]
+    private GameObject m_WallPrefab;
+    [SerializeField]
+    private Vector3 m_Position;
+    private float speed = 6;
 
     void FixedUpdate()
     {
@@ -17,11 +22,16 @@ public class Wall : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Projectile"))
         {
-            foreach (GameObject brick in bricks)
+            foreach(GameObject brick in bricks)
             {
                 brick.GetComponent<Rigidbody>().isKinematic = false;
             }
-            Destroy(gameObject, 1f);
+            Destroy(gameObject, 0.3f);
         }
+    }
+
+    private void OnDestroy()
+    {
+        WallSpawner.InstantiateTheWall();
     }
 }

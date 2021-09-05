@@ -2,21 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallSpawner : MonoBehaviour
-{
-    [SerializeField]
-    private GameObject m_WallPrefab;
-    [SerializeField]
-    private Vector3 m_Position;
-    [SerializeField]
-    public static bool isCreated = false;
+public class WallSpawner : Spawner
+{        
+    [SerializeField] 
+    private int WaitingTime = 3;
 
-    void Update()
+    private bool isDelayOver;
+
+    private void Start()
     {
-        if (!isCreated)
+        isDelayOver = true;
+    }
+
+
+    protected override void FixedUpdate()
+    {
+        if (!isSpawned())
         {
-            isCreated = true;
-            Instantiate(m_WallPrefab, m_Position, Quaternion.identity);
+            Spawn();
+            StartCoroutine(DelaySpawning());
         }
+    }
+
+    IEnumerator DelaySpawning()
+    {
+        isDelayOver = false;
+        yield return new WaitForSeconds(WaitingTime);
+        isDelayOver = true;
+
+    }
+
+    public override bool isSpawned()
+    {
+        return !isDelayOver;
     }
 }
