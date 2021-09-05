@@ -10,6 +10,8 @@ public class Wall : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (transform.position.z < -5)
+            Destroy(gameObject);
         transform.Translate(Vector3.back * speed * Time.fixedDeltaTime, Space.World);
     }
 
@@ -21,6 +23,7 @@ public class Wall : MonoBehaviour
             {
                 brick.GetComponent<Rigidbody>().isKinematic = false;
             }
+
             Destroy(gameObject, 1f);
         }
     }

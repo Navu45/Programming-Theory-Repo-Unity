@@ -21,15 +21,22 @@ public class ProjectileLauncher : MonoBehaviour
 
     void Update()
     {
-        if (projectile == null)
+        if (!GameplayManager.Instance.GameOver)
         {
-            projectile = ProjectileSpawner.GetSpawnedProjectile();
-        }
+            if (projectile == null)
+            {
+                projectile = ProjectileSpawner.GetSpawnedProjectile();
+            }
 
-        if (projectile != null && isDelayOver && Input.GetKeyDown(KeyCode.Space))
+            if (projectile != null && isDelayOver && Input.GetKeyDown(KeyCode.Space))
+            {
+                Launch();
+                StartCoroutine(DelayLaunching());
+            }
+        }
+        else
         {
-            Launch();
-            StartCoroutine(DelayLaunching());
+            DropTheProjectile();
         }
     }
 
@@ -45,5 +52,14 @@ public class ProjectileLauncher : MonoBehaviour
         projectile.isKinematic = false;
         projectile.useGravity = true;
         projectile.AddForce(new Vector3(0, 0.5f, 1) * speed, ForceMode.VelocityChange);
+    }
+
+    void DropTheProjectile()
+    {
+        if (projectile != null)
+        {
+            projectile.isKinematic = false;
+            projectile.useGravity = true;
+        }
     }
 }
