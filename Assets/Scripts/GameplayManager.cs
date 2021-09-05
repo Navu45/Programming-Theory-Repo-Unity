@@ -17,7 +17,7 @@ public class GameplayManager : MonoBehaviour
 
     private int m_Points = 0;
 
-    public bool GameOver
+    public bool GameOver // ENCAPSULATION
     {
         get
         {

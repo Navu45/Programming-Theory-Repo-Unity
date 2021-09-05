@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileSpawner : Spawner
+public class ProjectileSpawner : Spawner // INHERITANCE
 {
     [SerializeField]
     private GameObject[] m_ProjectilePrefabs;
@@ -24,7 +24,7 @@ public class ProjectileSpawner : Spawner
         Spawn(ref SpawnedProjectile);
     }
 
-    protected override void FixedUpdate()
+    protected override void FixedUpdate() // POLYMORPHISM
     {
         if (!GameplayManager.Instance.GameOver)
         {
@@ -64,7 +64,7 @@ public class ProjectileSpawner : Spawner
         return SpawnedProjectile.GetComponent<Rigidbody>().isKinematic == false;
     }
 
-    public override bool isSpawned()
+    public override bool isSpawned() // POLYMORPHISM
     {
         return SpawnedProjectile != null;
     }

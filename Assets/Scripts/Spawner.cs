@@ -10,7 +10,7 @@ public abstract class Spawner: MonoBehaviour
     [SerializeField]
     protected GameObject prefab;
 
-    public virtual void Spawn()
+    public virtual void Spawn() // POLYMORPHISM
     {
         if (!isSpawned())
         {
@@ -18,7 +18,7 @@ public abstract class Spawner: MonoBehaviour
         }
     }
 
-    public virtual void Spawn(ref GameObject GameObjRef)
+    public virtual void Spawn(ref GameObject GameObjRef) // POLYMORPHISM
     {
         if (!isSpawned())
         {

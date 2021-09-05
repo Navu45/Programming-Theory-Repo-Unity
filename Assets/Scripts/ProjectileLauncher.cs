@@ -47,14 +47,14 @@ public class ProjectileLauncher : MonoBehaviour
         isDelayOver = true;
     }
 
-    void Launch()
+    void Launch() // ABSTRACTION
     {
         projectile.isKinematic = false;
         projectile.useGravity = true;
         projectile.AddForce(new Vector3(0, 0.5f, 1) * speed, ForceMode.VelocityChange);
     }
 
-    void DropTheProjectile()
+    void DropTheProjectile() // ABSTRACTION
     {
         if (projectile != null)
         {

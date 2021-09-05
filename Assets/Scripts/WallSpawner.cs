@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallSpawner : Spawner
+public class WallSpawner : Spawner // INHERITANCE
 {        
     [SerializeField] 
     private int WaitingTime = 3;
@@ -15,7 +15,7 @@ public class WallSpawner : Spawner
     }
 
 
-    protected override void FixedUpdate()
+    protected override void FixedUpdate() // POLYMORPHISM
     {
         if (!GameplayManager.Instance.GameOver && !isSpawned())
         {
@@ -32,7 +32,7 @@ public class WallSpawner : Spawner
 
     }
 
-    public override bool isSpawned()
+    public override bool isSpawned() // POLYMORPHISM
     {
         return !isDelayOver;
     }
